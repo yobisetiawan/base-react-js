@@ -1,16 +1,43 @@
 import React, { useRef } from "react";
 import { Button, Pane, Card, TextInputField, Text, Link } from "evergreen-ui";
 import { useForm } from "react-hook-form";
-import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
+import {
+  validationMessage,
+  useBaseFormRequest,
+  useFirstLoad,
+} from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
-import { Link as LinkRouter } from "react-router-dom";
+import {
+  Link as LinkRouter,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../redux/slices/userSlice";
 
 function LoginPage() {
   const formData = useRef(null) as any;
-  const { register, handleSubmit } = useForm();
 
-  const onSuccess = (data: any) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, setValue } = useForm();
+
+  const [searchParams] = useSearchParams();
+
+  const dispatch = useDispatch();
+
+  useFirstLoad(() => {
+    setValue("email", searchParams.get("email"));
+  });
+
+  const onSuccess = async (data: any) => {
+    localStorage.setItem("token", data.token);
+
+    let user = await API.user();
+
+    dispatch(signIn(user.data.data));
+
+    navigate("/dashboard", { replace: true });
   };
 
   const { submitRequest, isLoading, errForm } = useBaseFormRequest(

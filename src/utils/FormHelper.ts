@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     toaster,
 } from "evergreen-ui";
@@ -20,8 +20,25 @@ export const useBaseFormHook = () => {
     return { isLoading, setIsLoading, errForm, setErrForm, formData };
 }
 
+export const useFirstLoad = (onFirstLoad?: () => void) => {
+    const isFirstLoad = useRef(true) as any;
 
-export const useBaseFormRequest = (api: any, onSuccess?: (data: any) => void) => {
+    useEffect(() => {
+
+        if (isFirstLoad.current) {
+            isFirstLoad.current = false;
+            if (onFirstLoad) {
+                onFirstLoad();
+            }
+        }
+
+    }, [onFirstLoad]);
+
+    return isFirstLoad.current;
+}
+
+
+export const useBaseFormRequest = (api: any, onSuccess?: (data?: any) => void) => {
     const { isLoading, setIsLoading, errForm, setErrForm } = useBaseFormHook();
     const successData = useRef(null) as any;
 
