@@ -8,7 +8,7 @@ const DashboardPage = () => {
     <AppLayout>
       <Pane className="page-content">
         <Pane minHeight={900} padding={20}>
-          <Heading>Dashboard 22</Heading>
+          <Heading>Dashboard</Heading>
         </Pane>
       </Pane>
     </AppLayout>

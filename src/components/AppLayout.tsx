@@ -6,6 +6,8 @@ import { signOut } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { useUser } from "../redux/Selector";
 
+import dayjs from "dayjs";
+
 interface Props {
   children: JSX.Element;
   footer?: JSX.Element;
@@ -65,6 +67,7 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
               ></Avatar>
               <Pane marginBottom={20} marginTop={10}>
                 <Text className="color-text">{user?.name}</Text>
+                <div className="color-text">{dayjs().format()}</div>
               </Pane>
               <div>
                 <Button onClick={onSignOut}>Logout</Button>
