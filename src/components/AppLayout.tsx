@@ -52,7 +52,7 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
               </UiLink>
             </li>
             <li>
-              <UiLink is={Link} to={RouteName.dashboard}>
+              <UiLink is={Link} to={RouteName.example}>
                 <Text className="color-text">Example</Text>
               </UiLink>
             </li>

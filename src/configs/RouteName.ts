@@ -2,7 +2,8 @@ const RouteName = {
     init: '/',
     login: '/auth/login',
     forgotPassword: '/auth/forgot-password',
-    dashboard: '/dashboard'
+    dashboard: '/dashboard',
+    example: '/example'
 }
 
 export { RouteName };

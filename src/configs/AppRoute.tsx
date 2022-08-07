@@ -6,8 +6,9 @@ import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import LoginPage from "../pages/auth/LoginPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
+import ExamplePage from "../pages/example/ExamplePage";
 import { useUser } from "../redux/Selector";
- 
+
 import { RouteName } from "./RouteName";
 
 interface Props {
@@ -78,6 +79,15 @@ const AppRoute = () => {
           element={
             <RequireAuth>
               <DashboardPage />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path={RouteName.example}
+          element={
+            <RequireAuth>
+              <ExamplePage />
             </RequireAuth>
           }
         />
