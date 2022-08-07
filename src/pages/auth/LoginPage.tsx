@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../redux/slices/userSlice";
+import { RouteName } from "../../configs/RouteName";
 
 function LoginPage() {
   const formData = useRef(null) as any;
@@ -37,7 +38,7 @@ function LoginPage() {
 
     dispatch(signIn(user.data.data));
 
-    navigate("/dashboard", { replace: true });
+    navigate(RouteName.dashboard, { replace: true });
   };
 
   const { submitRequest, isLoading, errForm } = useBaseFormRequest(
@@ -82,7 +83,7 @@ function LoginPage() {
               Submit
             </Button>
 
-            <Link to={"/forgot-password"} is={LinkRouter} size="small">
+            <Link to={RouteName.forgotPassword} is={LinkRouter} size="small">
               Forgot Password
             </Link>
           </form>

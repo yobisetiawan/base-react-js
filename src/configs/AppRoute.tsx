@@ -7,10 +7,21 @@ import LoginPage from "../pages/auth/LoginPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import { useAuth } from "../utils/AuthHelper";
+import { RouteName } from "./RouteName";
 
 interface Props {
   children: JSX.Element;
 }
+
+const GuestOnlyAuth = ({ children }: Props) => {
+  let { user } = useAuth();
+
+  if (user?.email) {
+    return <Navigate to={RouteName.dashboard} />;
+  }
+
+  return children;
+};
 
 const RequireAuth = ({ children }: Props) => {
   let { user } = useAuth();
@@ -21,7 +32,7 @@ const RequireAuth = ({ children }: Props) => {
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to={RouteName.login} state={{ from: location }} replace />;
   }
 
   return children;
@@ -30,17 +41,39 @@ const RequireAuth = ({ children }: Props) => {
 const AppRoute = () => {
   return (
     <Routes>
-      <Route path="/" element={<App />}>
+      <Route path={RouteName.init} element={<App />}>
         <Route index element={<LoginPage />} />
-        <Route path="auth/login" element={<LoginPage />} />
 
-        <Route path="auth/forgot-password" element={<App />}>
-          <Route index element={<ForgotPasswordPage />} />
-          <Route path=":email" element={<ResetPasswordPage />} />
+        <Route
+          path={RouteName.login}
+          element={
+            <GuestOnlyAuth>
+              <LoginPage />
+            </GuestOnlyAuth>
+          }
+        />
+
+        <Route path={RouteName.forgotPassword} element={<App />}>
+          <Route
+            index
+            element={
+              <GuestOnlyAuth>
+                <ForgotPasswordPage />
+              </GuestOnlyAuth>
+            }
+          />
+          <Route
+            path=":email"
+            element={
+              <GuestOnlyAuth>
+                <ResetPasswordPage />
+              </GuestOnlyAuth>
+            }
+          />
         </Route>
 
         <Route
-          path="dashboard"
+          path={RouteName.dashboard}
           element={
             <RequireAuth>
               <DashboardPage />

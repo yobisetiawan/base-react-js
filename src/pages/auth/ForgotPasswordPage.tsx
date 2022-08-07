@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
 import { Outlet, useNavigate } from "react-router-dom";
+import { RouteName } from "../../configs/RouteName";
 
 function ForgotPasswordPage() {
   const formData = useRef(null) as any;
@@ -13,7 +14,7 @@ function ForgotPasswordPage() {
   const onSuccess = (data: any) => {
     console.log(data);
 
-    navigate("/forgot-password/" + formData.current?.email);
+    navigate(RouteName.forgotPassword + "/" + formData.current?.email);
   };
 
   const { submitRequest, isLoading, errForm } = useBaseFormRequest(
@@ -54,7 +55,7 @@ function ForgotPasswordPage() {
         </Card>
       </Pane>
 
-      <Outlet/>
+      <Outlet />
     </Pane>
   );
 }

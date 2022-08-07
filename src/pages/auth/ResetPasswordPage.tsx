@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
 import { useNavigate, useParams } from "react-router-dom";
+import { RouteName } from "../../configs/RouteName";
 
 function ResetPasswordPage() {
   const formData = useRef(null) as any;
@@ -24,7 +25,7 @@ function ResetPasswordPage() {
       "Password changed!, your password has been changed successfully  "
     );
 
-    navigate("/login?email=" + formData.current?.email);
+    navigate(RouteName.login+"?email=" + formData.current?.email);
   };
 
   const { submitRequest, isLoading, errForm } = useBaseFormRequest(
