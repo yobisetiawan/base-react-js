@@ -1,5 +1,12 @@
 import React, { useRef } from "react";
-import { Button, Pane, Card, TextInputField, Text } from "evergreen-ui";
+import {
+  Button,
+  Pane,
+  Card,
+  TextInputField,
+  Text,
+  toaster,
+} from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
@@ -11,9 +18,8 @@ function ForgotPasswordPage() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const onSuccess = (data: any) => {
-    console.log(data);
-
+  const onSuccess = () => {
+    toaster.success("We sent OTP to your email, please check your mail");
     navigate(RouteName.forgotPassword + "/" + formData.current?.email);
   };
 
@@ -36,7 +42,13 @@ function ForgotPasswordPage() {
         justifyContent="center"
         height="100%"
       >
-        <Card border="default" padding={20} maxWidth={350} width="100%">
+        <Card
+          border="default"
+          background="white"
+          padding={20}
+          maxWidth={350}
+          width="100%"
+        >
           <Text fontSize={20} fontWeight={"bold"}>
             Forgot Password
           </Text>

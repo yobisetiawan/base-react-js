@@ -1,4 +1,5 @@
 import axios from "axios";
+import { objectToQuery } from "../utils/Helper";
 import { API_HOST } from "./AppConfig";
 
 const config = () => {
@@ -18,6 +19,6 @@ export const API = {
     resetPassword: (data: any) => axios
         .post(API_HOST + "/auth/reset-password", data),
     user: () => axios
-        .get(API_HOST + "/user", config()),
+        .get(API_HOST + "/user?" + objectToQuery({ relations: 'avatar' }), config()),
 
 }

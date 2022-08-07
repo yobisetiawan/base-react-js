@@ -6,7 +6,8 @@ import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import LoginPage from "../pages/auth/LoginPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
-import { useAuth } from "../utils/AuthHelper";
+import { useUser } from "../redux/Selector";
+ 
 import { RouteName } from "./RouteName";
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const GuestOnlyAuth = ({ children }: Props) => {
-  let { user } = useAuth();
+  const { user } = useUser();
 
   if (user?.email) {
     return <Navigate to={RouteName.dashboard} />;
@@ -24,8 +25,8 @@ const GuestOnlyAuth = ({ children }: Props) => {
 };
 
 const RequireAuth = ({ children }: Props) => {
-  let { user } = useAuth();
-  let location = useLocation();
+  const { user } = useUser();
+  const location = useLocation();
 
   if (!user?.email) {
     // Redirect them to the /login page, but save the current location they were

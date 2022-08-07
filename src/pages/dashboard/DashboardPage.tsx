@@ -1,26 +1,17 @@
-import { Pane } from "evergreen-ui";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { signOut } from "../../redux/slices/userSlice";
-import { RootState } from "../../redux/store";
+import { Pane, Heading } from "evergreen-ui";
+import AppLayout from "../../components/AppLayout";
 
 const DashboardPage = () => {
-  const user = useSelector((state: RootState) => state.user) as any;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const onSignOut = () => {
-    dispatch(signOut());
-    navigate("/auth/login", { replace: true });
-  };
+ 
 
   return (
-    <Pane>
-      Dashboard
-      <p>Name : {user?.name}</p>
-      <button onClick={onSignOut}>Logout</button>
-    </Pane>
+    <AppLayout>
+      <Pane className="page-content">
+        <Pane minHeight={900} padding={20}>
+          <Heading>Dashboard 22</Heading>
+        </Pane>
+      </Pane>
+    </AppLayout>
   );
 };
 

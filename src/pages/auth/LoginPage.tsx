@@ -60,7 +60,7 @@ function LoginPage() {
         justifyContent="center"
         height="100%"
       >
-        <Card border="default" padding={20} maxWidth={350} width="100%">
+        <Card border="default" background="white" padding={20} maxWidth={350} width="100%">
           <Text fontSize={20} fontWeight={"bold"}>
             Login
           </Text>
