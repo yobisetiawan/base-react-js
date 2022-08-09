@@ -1,4 +1,11 @@
-import { Pane, Heading, Table, Spinner, Pagination } from "evergreen-ui";
+import {
+  Pane,
+  Heading,
+  Table,
+  Spinner,
+  Pagination,
+  SelectField,
+} from "evergreen-ui";
 import { useRef, useState } from "react";
 import AppLayout from "../../components/AppLayout";
 import { API } from "../../configs/AppApi";
@@ -35,6 +42,13 @@ const ExamplePage = () => {
       <Pane className="page-content">
         <Pane minHeight={900} padding={20}>
           <Heading marginBottom={20}>Example</Heading>
+
+          <SelectField label="Branch">
+            <option value="foo" selected>
+              Foo
+            </option>
+            <option value="bar">Bar</option>
+          </SelectField>
 
           <Table position="relative">
             <Table.Head>
@@ -82,6 +96,12 @@ const ExamplePage = () => {
                   <Table.TextCell isNumber>{row.vip_bed_count}</Table.TextCell>
                 </Table.Row>
               ))}
+
+              {(ress?.data || []).length === 0 && (
+                <Table.Row>
+                  <Table.TextCell>No Data</Table.TextCell>
+                </Table.Row>
+              )}
             </Table.Body>
           </Table>
 
