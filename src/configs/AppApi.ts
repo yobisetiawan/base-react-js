@@ -20,5 +20,7 @@ export const API = {
         .post(API_HOST + "/auth/reset-password", data),
     user: () => axios
         .get(API_HOST + "/user?" + objectToQuery({ relations: 'avatar' }), config()),
+    medicalWard: (params: any) => axios
+        .get(API_HOST + "/medical/wards?" + objectToQuery(params), config()),
 
 }

@@ -3,7 +3,7 @@ import { Button, Pane, Card, TextInputField, Text, Link } from "evergreen-ui";
 import { useForm } from "react-hook-form";
 import {
   validationMessage,
-  useBaseFormRequest,
+  useBaseRequest,
   useFirstLoad,
 } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
@@ -41,10 +41,10 @@ function LoginPage() {
     navigate(RouteName.dashboard, { replace: true });
   };
 
-  const { submitRequest, isLoading, errForm } = useBaseFormRequest(
-    () => API.login(formData.current),
-    onSuccess
-  );
+  const { submitRequest, isLoading, errForm } = useBaseRequest({
+    api: () => API.login(formData.current),
+    onSuccess,
+  });
 
   const onSubmit = handleSubmit((data) => {
     data.login_as = "employee";
@@ -60,7 +60,13 @@ function LoginPage() {
         justifyContent="center"
         height="100%"
       >
-        <Card border="default" background="white" padding={20} maxWidth={350} width="100%">
+        <Card
+          border="default"
+          background="white"
+          padding={20}
+          maxWidth={350}
+          width="100%"
+        >
           <Text fontSize={20} fontWeight={"bold"}>
             Login
           </Text>

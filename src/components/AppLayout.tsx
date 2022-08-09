@@ -31,7 +31,7 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
           topBar
         ) : (
           <Pane paddingX="20px" paddingY="12px">
-            <Text>page-topbar</Text>
+            <Text>Topbar</Text>
           </Pane>
         )}
       </Pane>
@@ -67,7 +67,9 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
               ></Avatar>
               <Pane marginBottom={20} marginTop={10}>
                 <Text className="color-text">{user?.name}</Text>
-                <div className="color-text">{dayjs().format()}</div>
+                <div>
+                  <Text className="color-text"> {dayjs().format()}</Text>
+                </div>
               </Pane>
               <div>
                 <Button onClick={onSignOut}>Logout</Button>

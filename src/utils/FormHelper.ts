@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import {
     toaster,
 } from "evergreen-ui";
+import { useNavigate } from "react-router-dom";
+import { RouteName } from "../configs/RouteName";
 
 export const validationMessage = (errForm: any, field: string) => {
 
@@ -38,12 +40,36 @@ export const useFirstLoad = (onFirstLoad?: () => void) => {
 }
 
 
-export const useBaseFormRequest = (api: any, onSuccess?: (data?: any) => void) => {
+interface UseBaseRequestConfig {
+    showMessageToaster: boolean;
+    logoutIf401: boolean;
+}
+interface UseBaseRequestParams {
+    api: any;
+    onSuccess?: (data?: any) => void;
+    onError?: (data?: any) => void;
+    config?: UseBaseRequestConfig
+}
+
+export const useBaseRequestConfig: UseBaseRequestConfig = {
+    showMessageToaster: true,
+    logoutIf401: true,
+};
+
+export const useBaseRequest = ({ api, onSuccess, onError, config }: UseBaseRequestParams) => {
     const { isLoading, setIsLoading, errForm, setErrForm } = useBaseFormHook();
     const successData = useRef(null) as any;
 
+    const navigate = useNavigate();
+
     const submitRequest = () => {
         setIsLoading(true);
+        let c = config;
+
+        if (c === undefined) {
+            c = { ...useBaseRequestConfig };
+        }
+
         api().then((ress: any) => {
             successData.current = ress.data;
             setErrForm(null);
@@ -52,13 +78,30 @@ export const useBaseFormRequest = (api: any, onSuccess?: (data?: any) => void) =
             }
         })
             .catch((err: any) => {
-                if (err?.response?.data?.message) {
-                    toaster.danger(err.response.data.message);
+
+                if (c?.showMessageToaster && err?.response?.data?.message) {
+                    if (err?.response?.status === 401) {
+                        toaster.danger(err.response.data.message, {
+                            id: 'forbidden-action'
+                        });
+                    } else {
+                        toaster.danger(err.response.data.message);
+                    }
+
                 }
 
                 if (err?.response?.data?.errors) {
                     setErrForm(err.response.data.errors);
                 }
+
+                if (c?.logoutIf401 && err?.response?.status === 401) {
+                    navigate(RouteName.init);
+                }
+
+                if (onError) {
+                    onError(err);
+                }
+
             })
             .finally(() => {
                 setIsLoading(false);

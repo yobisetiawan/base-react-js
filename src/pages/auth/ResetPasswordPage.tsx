@@ -8,7 +8,7 @@ import {
   toaster,
 } from "evergreen-ui";
 import { useForm } from "react-hook-form";
-import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
+import { validationMessage, useBaseRequest } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { RouteName } from "../../configs/RouteName";
@@ -25,13 +25,13 @@ function ResetPasswordPage() {
       "Password changed!, your password has been changed successfully  "
     );
 
-    navigate(RouteName.login+"?email=" + formData.current?.email);
+    navigate(RouteName.login + "?email=" + formData.current?.email);
   };
 
-  const { submitRequest, isLoading, errForm } = useBaseFormRequest(
-    () => API.resetPassword(formData.current),
-    onSuccess
-  );
+  const { submitRequest, isLoading, errForm } = useBaseRequest({
+    api: () => API.resetPassword(formData.current),
+    onSuccess,
+  });
 
   const onSubmit = handleSubmit((data) => {
     data.email = params?.email;
@@ -47,7 +47,13 @@ function ResetPasswordPage() {
         justifyContent="center"
         height="100%"
       >
-        <Card border="default" background="white" padding={20} maxWidth={350} width="100%">
+        <Card
+          border="default"
+          background="white"
+          padding={20}
+          maxWidth={350}
+          width="100%"
+        >
           <Text fontSize={20} fontWeight={"bold"}>
             Reset Password
           </Text>

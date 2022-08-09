@@ -8,7 +8,7 @@ import {
   toaster,
 } from "evergreen-ui";
 import { useForm } from "react-hook-form";
-import { validationMessage, useBaseFormRequest } from "../../utils/FormHelper";
+import { validationMessage, useBaseRequest } from "../../utils/FormHelper";
 import { API } from "../../configs/AppApi";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RouteName } from "../../configs/RouteName";
@@ -23,10 +23,10 @@ function ForgotPasswordPage() {
     navigate(RouteName.forgotPassword + "/" + formData.current?.email);
   };
 
-  const { submitRequest, isLoading, errForm } = useBaseFormRequest(
-    () => API.forgotPassword(formData.current),
-    onSuccess
-  );
+  const { submitRequest, isLoading, errForm } = useBaseRequest({
+    api: () => API.forgotPassword(formData.current),
+    onSuccess,
+  });
 
   const onSubmit = handleSubmit((data) => {
     data.login_as = "employee";
