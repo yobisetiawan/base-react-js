@@ -44,7 +44,14 @@ const AppRoute = () => {
   return (
     <Routes>
       <Route path={RouteName.init} element={<App />}>
-        <Route index element={<LoginPage />} />
+        <Route
+          index
+          element={
+            <RequireAuth>
+              <DashboardPage />
+            </RequireAuth>
+          }
+        />
 
         <Route
           path={RouteName.login}
