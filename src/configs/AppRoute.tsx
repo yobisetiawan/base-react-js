@@ -7,6 +7,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ExamplePage from "../pages/example/ExamplePage";
+import ChangeAvatar from "../pages/profile/ChangeAvatar";
 import ChangePassword from "../pages/profile/ChangePassword";
 import { useUser } from "../redux/Selector";
 
@@ -105,6 +106,15 @@ const AppRoute = () => {
           element={
             <RequireAuth>
               <ChangePassword />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path={RouteName.profileChangeAvatar}
+          element={
+            <RequireAuth>
+              <ChangeAvatar />
             </RequireAuth>
           }
         />

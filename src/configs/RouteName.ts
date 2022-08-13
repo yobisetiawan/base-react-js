@@ -5,8 +5,8 @@ const RouteName = {
     dashboard: '/dashboard',
     example: '/example',
 
-
-    profileChangePassword: '/profile/change-password'
+    profileChangePassword: '/profile/change-password',
+    profileChangeAvatar: '/profile/change-avatar'
 }
 
 export { RouteName };

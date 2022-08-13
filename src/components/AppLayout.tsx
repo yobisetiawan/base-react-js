@@ -57,6 +57,11 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
               </UiLink>
             </li>
             <li>
+              <UiLink is={Link} to={RouteName.profileChangeAvatar}>
+                <Text className="color-text">Change Avatar</Text>
+              </UiLink>
+            </li>
+            <li>
               <UiLink is={Link} to={RouteName.profileChangePassword}>
                 <Text className="color-text">Change Password</Text>
               </UiLink>

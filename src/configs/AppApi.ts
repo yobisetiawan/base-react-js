@@ -32,5 +32,7 @@ export const API = {
 
     profileChangePassword: (data: any) => axios
         .post(API_HOST + "/user/change-password", data, config()),
+    profileChangeAvatar: (data: any) => axios
+        .post(API_HOST + "/user/change-avatar", data, config()),
 
 }
