@@ -7,6 +7,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ExamplePage from "../pages/example/ExamplePage";
+import ChangePassword from "../pages/profile/ChangePassword";
 import { useUser } from "../redux/Selector";
 
 import { RouteName } from "./RouteName";
@@ -95,6 +96,15 @@ const AppRoute = () => {
           element={
             <RequireAuth>
               <ExamplePage />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path={RouteName.profileChangePassword}
+          element={
+            <RequireAuth>
+              <ChangePassword />
             </RequireAuth>
           }
         />

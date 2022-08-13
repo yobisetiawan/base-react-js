@@ -43,6 +43,8 @@ const ExamplePage = () => {
     },
   });
 
+  const defaultBranch = useRef(user?.employee?.active_branch?.id) as any;
+
   useFirstLoad(() => {
     branchReq.submitRequest();
     submitRequest();
@@ -56,13 +58,15 @@ const ExamplePage = () => {
 
           <SelectField
             label="Branch"
-            defaultValue={user?.employee?.active_branch?.id}
+            value={defaultBranch.current}
             onChange={(e) => {
               params.current = {
                 ...params.current,
                 branch_id: e.target.value,
                 page: 1,
               };
+              defaultBranch.current = e.target.value;
+
               submitRequest();
             }}
           >

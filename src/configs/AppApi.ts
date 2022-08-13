@@ -30,4 +30,7 @@ export const API = {
     employeeBranch: (params?: any) => axios
         .get(API_HOST + "/employee/branches?" + objectToQuery(params), config()),
 
+    profileChangePassword: (data: any) => axios
+        .post(API_HOST + "/user/change-password", data, config()),
+
 }

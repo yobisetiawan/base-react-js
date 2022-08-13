@@ -56,6 +56,11 @@ const AppLayout = ({ children, footer, topBar }: Props) => {
                 <Text className="color-text">Example</Text>
               </UiLink>
             </li>
+            <li>
+              <UiLink is={Link} to={RouteName.profileChangePassword}>
+                <Text className="color-text">Change Password</Text>
+              </UiLink>
+            </li>
           </ul>
 
           <Pane justifyContent="center" display="flex" marginTop={20}>
