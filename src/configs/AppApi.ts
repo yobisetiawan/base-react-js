@@ -19,8 +19,15 @@ export const API = {
     resetPassword: (data: any) => axios
         .post(API_HOST + "/auth/reset-password", data),
     user: () => axios
-        .get(API_HOST + "/user?" + objectToQuery({ relations: 'avatar' }), config()),
-    medicalWard: (params: any) => axios
+        .get(API_HOST + "/user?" + objectToQuery({
+            relations: [
+                'avatar',
+                'employee.activeBranch'
+            ].join(', ')
+        }), config()),
+    medicalWard: (params?: any) => axios
         .get(API_HOST + "/medical/wards?" + objectToQuery(params), config()),
+    employeeBranch: (params?: any) => axios
+        .get(API_HOST + "/employee/branches?" + objectToQuery(params), config()),
 
 }

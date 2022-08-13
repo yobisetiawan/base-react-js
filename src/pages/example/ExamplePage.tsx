@@ -9,11 +9,15 @@ import {
 import { useRef, useState } from "react";
 import AppLayout from "../../components/AppLayout";
 import { API } from "../../configs/AppApi";
+import { useUser } from "../../redux/Selector";
 import { useBaseRequest, useFirstLoad } from "../../utils/FormHelper";
 import { debounce } from "../../utils/Helper";
 
 const ExamplePage = () => {
   const [ress, setRess] = useState() as any;
+  const [branch, setBranch] = useState() as any;
+
+  const user = useUser();
 
   const refSearch = useRef() as any;
 
@@ -22,18 +26,25 @@ const ExamplePage = () => {
     limit: 5,
     page: 1,
     q: "",
+    branch_id: user?.employee?.active_branch?.id,
   }) as any;
-
-  const onSuccess = async (data: any) => {
-    setRess(data);
-  };
 
   const { submitRequest, isLoading } = useBaseRequest({
     api: () => API.medicalWard(params.current),
-    onSuccess,
+    onSuccess: async (data: any) => {
+      setRess(data);
+    },
+  });
+
+  const branchReq = useBaseRequest({
+    api: () => API.employeeBranch(),
+    onSuccess: async (data: any) => {
+      setBranch(data);
+    },
   });
 
   useFirstLoad(() => {
+    branchReq.submitRequest();
     submitRequest();
   });
 
@@ -43,11 +54,23 @@ const ExamplePage = () => {
         <Pane minHeight={900} padding={20}>
           <Heading marginBottom={20}>Example</Heading>
 
-          <SelectField label="Branch">
-            <option value="foo" selected>
-              Foo
-            </option>
-            <option value="bar">Bar</option>
+          <SelectField
+            label="Branch"
+            defaultValue={user?.employee?.active_branch?.id}
+            onChange={(e) => {
+              params.current = {
+                ...params.current,
+                branch_id: e.target.value,
+                page: 1,
+              };
+              submitRequest();
+            }}
+          >
+            {(branch?.data || []).map((row: any) => (
+              <option value={row.id} key={row.id}>
+                {row.title}
+              </option>
+            ))}
           </SelectField>
 
           <Table position="relative">

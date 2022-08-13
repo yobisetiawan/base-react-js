@@ -17,7 +17,7 @@ interface Props {
 const AppLayout = ({ children, footer, topBar }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const user = useUser();
 
   const onSignOut = () => {
     dispatch(signOut());

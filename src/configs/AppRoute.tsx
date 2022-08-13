@@ -16,7 +16,7 @@ interface Props {
 }
 
 const GuestOnlyAuth = ({ children }: Props) => {
-  const { user } = useUser();
+  const user = useUser();
 
   if (user?.email) {
     return <Navigate to={RouteName.dashboard} />;
@@ -26,7 +26,7 @@ const GuestOnlyAuth = ({ children }: Props) => {
 };
 
 const RequireAuth = ({ children }: Props) => {
-  const { user } = useUser();
+  const user = useUser();
   const location = useLocation();
 
   if (!user?.email) {
